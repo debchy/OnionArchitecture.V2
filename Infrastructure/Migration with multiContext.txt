@@ -1,0 +1,29 @@
+﻿Ref:EF6 https://stackoverflow.com/questions/13469881/how-do-i-enable-ef-migrations-for-multiple-contexts-to-separate-databases
+Ref:EF7 https://docs.microsoft.com/en-us/ef/core/managing-schemas/migrations/providers
+
+Ref: onionArchitecture main Referance: https://medium.com/@sergiis/stem-in-onion-architecture-or-fallacy-of-data-layer-9923f398f215
+Ref: onionArchitecture: https://www.codeguru.com/csharp/csharp/cs_misc/designtechniques/understanding-onion-architecture.html
+Ref: onionArchitecture: https://softwareengineering.stackexchange.com/questions/359656/how-to-structure-an-onion-project
+Ref: onionArchitecture: https://www.c-sharpcorner.com/UploadFile/dhananjaycoder/step-by-step-implementing-onion-architecture-in-Asp-Net-mvc/
+Ref: onionArchitecture: https://www.codeproject.com/Articles/808400/Onion-Architecture-in-ASP-Net-MVC
+
+Ref: Get connection string from App.config: https://stackoverflow.com/questions/6536715/get-connection-string-from-app-config
+
+Ref: Generic Repository pattern & Unit Of Work (UoW): https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application
+
+
+
+
+##EF6 Multi context data migration
+
+#step 1: enable migrations
+PM> Enable-Migrations -MigrationsDirectory "Migrations\DataBaseContext" -ContextTypeName Infrastructure.DataBaseContext
+PM> Enable-Migrations -MigrationsDirectory "Migrations\ContextB" -ContextTypeName MyProject.Models.ContextB
+
+#Step 2: Add Migration
+PM> Add-Migration -ConfigurationTypeName Infrastructure.Migrations.DataBaseContext.Configuration -name 'InitalCreate'
+PM> Add-Migration -ConfigurationTypeName ConfigB -name 'InitalCreateB'
+
+#Step 3: Update Migrations
+PM> Update-Database -ConfigurationTypeName Infrastructure.Migrations.DataBaseContext.Configuration
+PM> Update-Database -ConfigurationTypeName ConfigB
